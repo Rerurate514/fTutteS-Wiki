@@ -1,9 +1,17 @@
-import { assembleView, Text } from "ftuttes";
+import { assembleView, ProviderObserver, Text, View } from "ftuttes";
+import { AppRouter } from "transitus";
+import { HomePage } from "./pages/home_page";
 
-// npm run dev
+const routes = new Map<string, View>();
+routes.set("/", new HomePage());
+
+new ProviderObserver().outLogs();
 
 assembleView(
-    new Text({
-        text: "てすと"
+    new AppRouter({
+        routes: routes,
+        page404: new Text({text: "error"}),
+        homePage: new HomePage(),
+        startPageRoute: "/",
     })
 )
